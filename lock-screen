@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+if pidof xautolock; then
+    xautolock -locknow
+else
+    gnome-screensaver-command -l
+fi

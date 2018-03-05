@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+# apt install i3lock xautolock
+
+if pidof xautolock; then
+    echo 'xautolock already running'
+    exit 1
+fi
+
+# Lock the screen if idle for N minutes
+idletime=5
+# notify N seconds before locking
+notify_before=30
+
+# Commands
+#lockcmd="i3lock --color=808080 --ignore-empty-password --show-failed-attempts --dpms"
+lockcmd="gnome-screensaver-command -l"
+notifycmd="notify-send -u critical -t 10000 -- 'LOCKING screen in $notify_before seconds'"
+
+exec xautolock -detectsleep -time $idletime -locker "$lockcmd" -notify $notify_before -notifier "$notifycmd"
