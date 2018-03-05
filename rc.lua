@@ -128,12 +128,12 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = awful.widget.textclock("%Y-%m-%d(%a) <b>%H:%M:%S</b> ", 1)
+mytextclock = wibox.widget.textclock("%Y-%m-%d(%a) <b>%H:%M:%S</b> ", 1)
 
 ----[[
 -- http://awesome.naquadah.org/wiki/Vicious
 -- CPU
-cpuwidget = awful.widget.graph()
+cpuwidget = wibox.widget.graph()
 cpuwidget:set_width(25)
 cpuwidget:set_background_color("#494B4F")
 cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"}, {1, "#AECF96" }}})
@@ -338,7 +338,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
-    awful.key({ modkey, "Control" }, "l",     function () awful.util.spawn('/home/pjm0616/.config/awesome/lock-screen') end,
+    awful.key({ modkey, "Control" }, "l",     function () awful.spawn('/home/pjm0616/.config/awesome/lock-screen') end,
               {description = "locks the screen", group = "launcher"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
@@ -545,7 +545,11 @@ awful.rules.rules = {
 
     -- @DOC_DIALOG_RULE@
     -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
+    --{ rule_any = {type = { "normal", "dialog" }
+    --  }, properties = { titlebars_enabled = true }
+    --},
+    -- Add titlebars to dialogs
+    { rule_any = {type = { "dialog" }
       }, properties = { titlebars_enabled = true }
     },
 
@@ -628,4 +632,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 
-awful.util.spawn("/home/pjm0616/.config/awesome/startup.sh auto")
+awful.spawn("/home/pjm0616/.config/awesome/startup.sh auto")

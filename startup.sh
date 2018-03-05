@@ -18,8 +18,8 @@ tmux new -d -s tpfan && tmux send-keys -t tpfan 'cd /home/pjm0616/bin' 'C-m' '/h
 nm-applet --sm-disable &
 #bluetooth-applet &
 #blueman-applet &
+#gnome-sound-applet &
 system-config-printer-applet &
-gnome-sound-applet &
 xinput set-prop 'bcm5974' 'Synaptics Two-Finger Scrolling' 1 1
 
 SSH_ASKPASS=/usr/bin/ssh-askpass ssh-add -c </dev/null &
