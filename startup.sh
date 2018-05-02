@@ -43,7 +43,9 @@ pjm0616-laptop)
 	# Thinkpad fan controller
 	(cd /home/pjm0616/bin && tmux new -d -s tpfan && tmux send-keys -t tpfan '/home/pjm0616/bin/thinkfan_start' 'C-m')
 
-	# Periodically reset pulseaudio's default sink to USB sound card.
+	# Periodically reset pulseaudio's default sink to my USB sound card.
+	# Note that this is unnecessary with PulseAudio 9.0 or later - see https://www.freedesktop.org/wiki/Software/PulseAudio/Notes/9.0/#automaticroutingimprovements
+	# After upgrading to Ubuntu bionic this should be removed.
 	tmux new -d -s pafix && tmux send-keys -t pafix 'while sleep 5; do pactl set-default-sink alsa_output.usb-Breeze_audio_SA9023_USB_Audio-01.analog-stereo; done' 'C-m'
 
 	# Twitter notifier
