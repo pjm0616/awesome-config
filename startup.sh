@@ -12,6 +12,7 @@ fi
 
 xmodmap /home/pjm0616/.Xmodmap
 
+# TODO: restart xautolock when $firstrun=false.
 (cd /home/pjm0616/.config/awesome && tmux new -d -s xautolock && tmux send-keys -t xautolock '/home/pjm0616/.config/awesome/run-xautolock' 'C-m')
 
 # Start gnome services.
@@ -28,9 +29,6 @@ xenial)
 	;;
 
 bionic)
-	$firstrun && (
-		gnome-settings-daemon &
-	)
 	;;
 
 *)
@@ -74,6 +72,8 @@ pjm0616-laptop3)
 	;;
 
 daepodong)
+	# Set monitor position.
+	xrandr --output DVI-D-0 --left-of HDMI-A-3
 	;;
 
 *)
