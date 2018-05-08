@@ -38,6 +38,9 @@ esac
 
 case "$(hostname)" in
 pjm0616-laptop)
+	# Switch the monitor to standby mode after 10 minutes.
+	xset dpms 600 600 600
+
 	# Thinkpad fan controller
 	(cd /home/pjm0616/bin && tmux new -d -s tpfan && tmux send-keys -t tpfan '/home/pjm0616/bin/thinkfan_start' 'C-m')
 
@@ -59,6 +62,9 @@ pjm0616-laptop)
 	;;
 
 pjm0616-laptop3)
+	# Don't turn off the monitor.
+	xset -dpms
+
 	# MacBook Air 2012 touchpad
 	xinput set-prop 'bcm5974' 'Synaptics Two-Finger Scrolling' 1 1
 
@@ -72,6 +78,9 @@ pjm0616-laptop3)
 	;;
 
 daepodong)
+	# Don't turn off the monitor.
+	xset -dpms
+
 	# Set monitor position.
 	xrandr --output DVI-D-0 --left-of HDMI-A-3
 	;;
