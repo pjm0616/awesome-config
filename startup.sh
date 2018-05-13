@@ -29,6 +29,9 @@ xenial)
 	;;
 
 bionic)
+	$firstrun && (
+		nm-applet &
+	)
 	;;
 
 *)
