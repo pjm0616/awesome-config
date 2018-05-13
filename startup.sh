@@ -63,7 +63,7 @@ pjm0616-laptop)
 
 pjm0616-laptop3)
 	# Don't turn off the monitor.
-	xset -dpms
+	xset 0 0 0
 
 	# MacBook Air 2012 touchpad
 	xinput set-prop 'bcm5974' 'Synaptics Two-Finger Scrolling' 1 1
