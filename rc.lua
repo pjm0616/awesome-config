@@ -19,6 +19,8 @@ local wb_textbox = require("wibox.widget.textbox")
 local vicious = require("vicious")
 vicious.contrib = require("vicious.contrib")
 
+local myutils = require("myutils")
+
 -- {{{ Error handling
 -- @DOC_ERROR_HANDLING@
 -- Check if awesome encountered an error during startup and fell back to
@@ -388,6 +390,8 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"})
 )
 
+globalkeys = gears.table.join(globalkeys, myutils.myglobalkeys)
+
 -- @DOC_CLIENT_KEYBINDINGS@
 clientkeys = gears.table.join(
     awful.key({ modkey,           }, "f",
@@ -633,3 +637,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 
 awful.spawn("/home/pjm0616/.config/awesome/startup.sh auto")
+-- vim: et ts=4 sts=4 sw=4
