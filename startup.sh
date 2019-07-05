@@ -94,7 +94,7 @@ daepodong)
 	# HDMI - DVI - DP(rotated clockwise)
 	xrandr --output HDMI-A-3 --left-of DVI-D-0
 	xrandr --output DisplayPort-2 --right-of DVI-D-0
-	xrandr --output DisplayPort-2 --right-of DVI-D-0 --rotate left --mode 1440x900
+	xrandr --output DisplayPort-2 --right-of DVI-D-0 --rotate left --mode 1920x1200 #--mode 1440x900
 
 	;;
 
