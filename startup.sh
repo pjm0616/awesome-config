@@ -30,6 +30,7 @@ xenial)
 
 bionic)
 	$firstrun && (
+		unity-settings-daemon &
 		nm-applet &
 	)
 	;;
