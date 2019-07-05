@@ -11,6 +11,8 @@ if [ "$1" = "auto" ]; then
 fi
 
 xmodmap /home/pjm0616/.Xmodmap
+(sleep 5; xmodmap /home/pjm0616/.Xmodmap) &
+(sleep 10; xmodmap /home/pjm0616/.Xmodmap) &
 
 # Set window manager name to "LG3D" to make some Java AWT apps work properly.
 wmname LG3D
