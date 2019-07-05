@@ -58,9 +58,6 @@ pjm0616-laptop)
 	# After upgrading to Ubuntu bionic this should be removed.
 	tmux new -d -s pafix && tmux send-keys -t pafix 'while sleep 5; do pactl set-default-sink alsa_output.usb-Breeze_audio_SA9023_USB_Audio-01.analog-stereo; done' 'C-m'
 
-	# Twitter notifier
-	tmux new -d -s twitter && tmux send-keys -t twitter 'while sleep 10; do userstream; date; done' 'C-m'
-
 	# IRCCloud persist daemon
 	(cd /home/pjm0616/bin && tmux new -d -s irccloud && tmux send-keys -t irccloud './irccloud-persist.py' 'C-m')
 
