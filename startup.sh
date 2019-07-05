@@ -12,6 +12,9 @@ fi
 
 xmodmap /home/pjm0616/.Xmodmap
 
+# Set window manager name to "LG3D" to make some Java AWT apps work properly.
+wmname LG3D
+
 # TODO: restart xautolock when $firstrun=false.
 (cd /home/pjm0616/.config/awesome && tmux new -d -s xautolock && tmux send-keys -t xautolock '/home/pjm0616/.config/awesome/run-xautolock' 'C-m')
 
