@@ -40,6 +40,14 @@ bionic)
 	)
 	;;
 
+focal)
+	$firstrun && (
+		unity-settings-daemon &
+		nm-applet &
+		gnome-screensaver &
+	)
+	;;
+
 *)
 	echo "Unknown release: $(lsb_release -s -c)"
 	;;
