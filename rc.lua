@@ -520,6 +520,23 @@ awful.rules.rules = {
      }
     },
 
+    -- Fix intellij
+    -- https://github.com/awesomeWM/awesome/issues/2204#issuecomment-380061500
+    { rule = {
+        class = "jetbrains-.*",
+        instance = "sun-awt-X11-XWindowPeer",
+        name = "win.*"
+      },
+      properties = {
+        floating = true,
+        focus = true,
+        focusable = false,
+        ontop = true,
+        placement = awful.placement.restore,
+        buttons = {}
+      }
+    },
+
     -- @DOC_FLOATING_RULE@
     -- Floating clients.
     { rule_any = {
