@@ -105,10 +105,10 @@ daepodong)
 	xset -dpms
 
 	# Set monitor position.
-	# HDMI - DVI - DP(rotated clockwise)
-	xrandr --output HDMI-A-3 --left-of DVI-D-0
-	xrandr --output DisplayPort-2 --right-of DVI-D-0
-	xrandr --output DisplayPort-2 --right-of DVI-D-0 --rotate left --mode 1920x1200 #--mode 1440x900
+	# DVI(rotated clockwise) - HDMI(primary) - DP
+	xrandr --output HDMI-A-3 --primary --auto
+	xrandr --output DisplayPort-2 --auto --right-of HDMI-A-3
+	#xrandr --output DVI-D-0 --left-of HDMI-A-3 --rotate left --mode 1920x1200
 
 	# ibus doesn't seem to be autostarted after upgrading to focal.
 	ibus-daemon -r -d &
