@@ -64,11 +64,15 @@ esac
 
 case "$(hostname)" in
 pjm0616-laptop)
+	# DP is primary.
+	xrandr --output DP-1 --primary
+	# HDMI is secondary. Mirror display so that we can dynamically change the role of two monitors.
+	xrandr --output HDMI-1 --same-as DP-1
+	# ...or uncomment to use HDMI as separate display.
+	#xrandr --output HDMI-1 --right-of DP-1
+
 	# Switch the monitor to standby mode after 10 minutes.
 	xset dpms 600 600 600
-
-	# Thinkpad fan controller
-	(cd /home/pjm0616/bin && tmux new -d -s tpfan && tmux send-keys -t tpfan '/home/pjm0616/bin/thinkfan_start' 'C-m')
 
 	# Periodically reset pulseaudio's default sink to my USB sound card.
 	# Note that this is unnecessary with PulseAudio 9.0 or later - see https://www.freedesktop.org/wiki/Software/PulseAudio/Notes/9.0/#automaticroutingimprovements
