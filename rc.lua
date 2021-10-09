@@ -340,6 +340,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
+    awful.key({ modkey, "Control" }, "q",     function () awful.spawn('/home/pjm0616/.config/awesome/lock-screen') end,
+              {description = "locks the screen", group = "launcher"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.spawn('/home/pjm0616/.config/awesome/lock-screen') end,
               {description = "locks the screen", group = "launcher"}),
 
