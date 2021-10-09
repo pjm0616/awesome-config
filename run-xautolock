@@ -3,6 +3,13 @@ set -euo pipefail
 
 # apt install i3lock xautolock
 
+# Note: Some programs like mpv which disables screensaver interferes with xautolock,
+# so disable it by updating the mpv config file:
+# > echo stop-screensaver=no >> ~/.config/mpv/mpv.conf
+
+ENABLE_DPMS=true
+ENABLE_CORNERS=false
+
 if pidof xautolock; then
     echo 'xautolock already running'
     exit 1
@@ -11,11 +18,11 @@ fi
 # Lock the screen if idle for N minutes
 case "$(hostname)" in
 daepodong)
-	idletime=2
+	idletime=3
 	;;
 
 *)
-	idletime=5
+	idletime=4
 	;;
 esac
 
@@ -23,8 +30,20 @@ esac
 notify_before=30
 
 # Commands
-#lockcmd="i3lock --color=808080 --ignore-empty-password --show-failed-attempts --dpms"
-lockcmd="gnome-screensaver-command -l"
+#lockcmd="i3lock --color=808080 --ignore-empty-password --show-failed-attempts"
+if $ENABLE_DPMS; then
+	lockcmd="gnome-screensaver-command -l; sleep 2; xset dpms force standby"
+else
+	lockcmd="gnome-screensaver-command -l"
+fi
 notifycmd="notify-send -u critical -t 10000 -- 'LOCKING screen in $notify_before seconds'"
 
-exec xautolock -detectsleep -time $idletime -locker "$lockcmd" -notify $notify_before -notifier "$notifycmd"
+args=(
+	xautolock -noclose -detectsleep -time $idletime -locker "$lockcmd" -notify $notify_before -notifier "$notifycmd"
+)
+if $ENABLE_CORNERS; then
+	# bottom-left corner locks immediately
+	# bottom-right corner changes idletime to 10 minutes
+	args=("${args[@]}" -corners '00+-' -cornersize 10 -cornerdelay 3 -cornerredelay 600)
+fi
+exec "${args[@]}"

@@ -72,7 +72,8 @@ pjm0616-laptop)
 	#xrandr --output HDMI-1 --right-of DP-1
 
 	# Switch the monitor to standby mode after 10 minutes.
-	xset dpms 600 600 600
+	xset +dpms
+	xset dpms 600 0 0
 
 	# Periodically reset pulseaudio's default sink to my USB sound card.
 	# Note that this is unnecessary with PulseAudio 9.0 or later - see https://www.freedesktop.org/wiki/Software/PulseAudio/Notes/9.0/#automaticroutingimprovements
