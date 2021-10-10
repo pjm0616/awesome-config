@@ -125,21 +125,21 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- {{{ Wibar
--- Create a textclock widget
-mytextclock = wibox.widget.textclock("%Y-%m-%d(%a) <b>%H:%M:%S</b> ", 1)
-
 ----[[
--- http://awesome.naquadah.org/wiki/Vicious
+-- Keyboard map indicator and switcher
+--mykeyboardlayout = awful.widget.keyboardlayout()
+
 -- CPU
 cpuwidget = wibox.widget.graph()
 cpuwidget:set_width(25)
 cpuwidget:set_background_color("#494B4F")
 cpuwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 10,0 }, stops = { {0, "#FF5656"}, {0.5, "#88A175"}, {1, "#AECF96" }}})
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
+
+-- CPUfreq
+--freqwidget = wibox.widget.textbox()
+--vicious.register(freqwidget, vicious.widgets.cpufreq, "Freq: $1 MHz ($5) <b>|</b> ", 13, "cpu0")
 
 -- Memory
 memwidget = wibox.widget.textbox()
@@ -160,6 +160,9 @@ vicious.register(batwidget,vicious.contrib.my_bat_sysclass,
     end
         return 'BAT: <span color="'..ratecolor..'">('..args[1]..args[4]..'W)</span> <span color="'..capcolor..'">('..args[2]..'%|'..args[3]..')</span> <b>|</b> '
     end, 10, "BAT0")
+
+-- Create a textclock widget
+mytextclock = wibox.widget.textclock("%Y-%m-%d(%a) <b>%H:%M:%S</b> ", 1)
 --]]
 
 -- Create a wibox for each screen and add it
@@ -264,9 +267,10 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            --mykeyboardlayout,
             wibox.widget.systray(),
             cpuwidget,
+            --freqwidget,
             memwidget,
             batwidget,
             mytextclock,
