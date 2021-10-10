@@ -3,8 +3,12 @@ set -euo pipefail
 
 # To enable this script:
 # Add an udev rule to file: /etc/udev/rules.d/99-my-xmodmap-on-new-keyboard.rules
-# It's very important that we need to run this script in the background, because it needs be run after X11 has processed the event.
-# SUBSYSTEM=="input", ACTION=="add", ENV{ID_INPUT_KEYBOARD}=="?*", RUN+="/usr/bin/sudo -u pjm0616 -- sh -c '/home/pjm0616/bin/fix-xmodmap </dev/null >&0 2>&1 &'"
+## Automatically apply xmodmap after a keyboard has been added.
+## See /home/pjm0616/bin/fix-xmodmap for details.
+## Be sure to set the correct username for sudo, as the script lives in the user's home directory.
+## It's very important that we need to run this script in the background, because it needs be run after X11 has processed the event.
+#SUBSYSTEM=="input", ACTION=="add", ENV{ID_INPUT_KEYBOARD}=="?*", RUN+="/usr/bin/sudo -u pjm0616 -- sh -c '/home/pjm0616/bin/fix-xmodmap </dev/null >&0 2>&1 &'"
+#SUBSYSTEM=="input", ACTION=="add", ENV{ID_INPUT_KEY}=="?*", RUN+="/usr/bin/sudo -u pjm0616 -- sh -c '/home/pjm0616/bin/fix-xmodmap </dev/null >&0 2>&1 &'"
 
 if [[ ! -e "$HOME/.Xmodmap" ]]; then
 	exit 0
