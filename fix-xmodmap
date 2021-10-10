@@ -1,5 +1,7 @@
 #!/bin/bash
 set -euo pipefail
+# X11 resets xmodmap whenever it detects a new keyboard. This script tries to workaround that by
+# executing xmodmap & reset caps state when udev detected a new keyboard.
 
 # To enable this script:
 # Add an udev rule to file: /etc/udev/rules.d/99-my-xmodmap-on-new-keyboard.rules
