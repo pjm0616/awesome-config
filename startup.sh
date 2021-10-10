@@ -54,6 +54,7 @@ focal)
 		unity-settings-daemon &
 		nm-applet &
 		gnome-screensaver &
+		pasystray &
 	)
 	;;
 
