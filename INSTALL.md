@@ -1,8 +1,8 @@
 ### Required packages
-playerctl
-libnotify-bin
-xautolock
-pasystray
+```
+apt install playerctl libnotify-bin xautolock pasystray python3-gi
+#python3 -m pip install --user mpris_server
+```
 
 ### setup fix-xmodmap
 1. ln -s ../.config/awesome/fix-xmodmap ~/bin/
