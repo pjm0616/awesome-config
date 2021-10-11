@@ -81,6 +81,9 @@ def fb2k_beefweb_status():
 	status = {'playing': 'Playing', 'paused': 'Paused', 'stopped': 'Stopped'}[status]
 	return status
 
+def md_sanitize_str(s):
+	return re.sub('[\x00\r\n]', '', s)
+
 def fb2k_beefweb_metadata():
 	assert fb2k_beefweb_url
 	cols = ['album', 'artist', 'title', 'length']
@@ -99,7 +102,7 @@ def fb2k_beefweb_metadata():
 	# See: https://www.freedesktop.org/wiki/Specifications/mpris-spec/metadata/
 	mpris_metadata = {}
 	for col in ['album', 'artist', 'title']:
-		mpris_metadata['xesam:' + col] = fb2k_metadata[col]
+		mpris_metadata['xesam:' + col] = md_sanitize_str(fb2k_metadata[col])
 	if fb2k_metadata['length']:
 		# Convert length in "5:00.123" form to usecs.
 		m = re.match(r'^(\d+):(\d+)(\.\d+)?$', fb2k_metadata['length'])
