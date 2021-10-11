@@ -359,6 +359,8 @@ globalkeys = gears.table.join(
               {description = "media play/pause", group = "launcher"}),
     awful.key({           }, "XF86AudioNext", function () awful.spawn('/home/pjm0616/.config/awesome/scripts/my_playerctl.py next') end,
               {description = "media next", group = "launcher"}),
+    awful.key({ "Shift"   }, "XF86AudioNext", function () awful.spawn('/home/pjm0616/.config/awesome/scripts/my_playerctl.py random') end,
+              {description = "media next", group = "launcher"}),
     awful.key({           }, "XF86AudioPrev", function () awful.spawn('/home/pjm0616/.config/awesome/scripts/my_playerctl.py previous') end,
               {description = "media prev", group = "launcher"}),
 

@@ -10,6 +10,7 @@ The wrapper script should look like this:
 """
 import sys
 import subprocess
+import re
 import requests
 import urllib.parse
 
@@ -30,6 +31,8 @@ def fb2k_active():
 	return False
 
 def mpris_cmd(cmd):
+	if cmd == 'random':
+		return False
 	output = subprocess.check_output(['playerctl', cmd], encoding='utf8').strip()
 	return output
 
@@ -64,8 +67,6 @@ def fb2k_beefweb_cmd(cmd):
 		return False
 	if not r.ok:
 		return False
-	if r.status_code == 200:
-		return r.json()
 
 def fb2k_beefweb_status():
 	assert fb2k_beefweb_url
@@ -78,7 +79,7 @@ def fb2k_beefweb_status():
 	data = r.json()
 	status = data['player']['playbackState']
 	status = {'playing': 'Playing', 'paused': 'Paused', 'stopped': 'Stopped'}[status]
-	print(status)
+	return status
 
 def fb2k_beefweb_metadata():
 	assert fb2k_beefweb_url
@@ -92,11 +93,27 @@ def fb2k_beefweb_metadata():
 		return False
 	data = r.json()
 	active = data['player']['activeItem']
-	metadata = dict(zip(cols, active['columns']))
+	fb2k_metadata = dict(zip(cols, active['columns']))
+
+	# Convert metadata to mpris format.
+	# See: https://www.freedesktop.org/wiki/Specifications/mpris-spec/metadata/
+	mpris_metadata = {}
+	for col in ['album', 'artist', 'title']:
+		mpris_metadata['xesam:' + col] = fb2k_metadata[col]
+	if fb2k_metadata['length']:
+		# Convert length in "5:00.123" form to usecs.
+		m = re.match(r'^(\d+):(\d+)(\.\d+)?$', fb2k_metadata['length'])
+		val = int(m.group(1)) * 60 + int(m.group(2))
+		if m.group(3):
+			val += float(m.group(3))
+		val = int(val * 1000000)
+		mpris_metadata['mpris:length'] = val
+
 	player_name = 'foobar2000.exe'
-	for key in ['album', 'artist', 'title']:
-		val = metadata.get(key, '')
-		print('%s xesam:%s %s' % (player_name, key, val))
+	buf = []
+	for key, val in mpris_metadata.items():
+		buf.append('%s %s %s' % (player_name, key, val))
+	return '\n'.join(buf)
 
 def fb2k_native_cmd(cmd):
 	fb2k_cmd = fb2k_cmdmap[cmd]
@@ -115,12 +132,23 @@ def fb2k_cmd(cmd):
 		ret = fb2k_native_cmd(cmd)
 	return ret
 
-if __name__ == '__main__':
-	cmd = sys.argv[1]
-	assert cmd in ['play', 'pause', 'play-pause', 'stop', 'next', 'previous', 'status', 'metadata']
+def docmd(cmd):
 	if fb2k_active():
-		fb2k_cmd(cmd)
+		ret = fb2k_cmd(cmd)
 		if mpris_cmd('status') == 'Playing':
 			mpris_cmd('pause')
 	else:
-		print(mpris_cmd(cmd))
+		ret = mpris_cmd(cmd)
+	return ret
+
+if __name__ == '__main__':
+	cmd = sys.argv[1]
+	assert cmd in [
+		'play', 'pause', 'play-pause', 'stop', 'next', 'previous', 'status', 'metadata',
+		'random', # fb2k only
+	]
+	ret = docmd(cmd)
+	if ret:
+		print(ret)
+	if ret is False:
+		sys.exit(1)
