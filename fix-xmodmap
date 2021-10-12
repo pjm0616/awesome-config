@@ -5,6 +5,7 @@ set -euo pipefail
 
 # To enable this script:
 # Add an udev rule to file: /etc/udev/rules.d/99-my-xmodmap-on-new-keyboard.rules
+# ...and then run: `udevadm control --reload`
 ## Automatically apply xmodmap after a keyboard has been added.
 ## See /home/pjm0616/bin/fix-xmodmap for details.
 ## Be sure to set the correct username for sudo, as the script lives in the user's home directory.
