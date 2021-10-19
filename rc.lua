@@ -355,6 +355,8 @@ globalkeys = gears.table.join(
               {description = "audio mute", group = "launcher"}),
     awful.key({           }, "XF86AudioRaiseVolume", function () awful.spawn('pactl set-sink-volume @DEFAULT_SINK@ +5%') end,
               {description = "audio mute", group = "launcher"}),
+    awful.key({           }, "XF86AudioStop", function () awful.spawn('/home/pjm0616/.config/awesome/scripts/my_playerctl.py stop') end,
+              {description = "media stop", group = "launcher"}),
     awful.key({           }, "XF86AudioPlay", function () awful.spawn('/home/pjm0616/.config/awesome/scripts/my_playerctl.py play-pause') end,
               {description = "media play/pause", group = "launcher"}),
     awful.key({           }, "XF86AudioNext", function () awful.spawn('/home/pjm0616/.config/awesome/scripts/my_playerctl.py next') end,
