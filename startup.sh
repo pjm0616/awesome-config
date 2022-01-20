@@ -86,23 +86,21 @@ pjm0616-laptop)
 
 	$firstrun && (
 		SSH_ASKPASS=/usr/bin/ssh-askpass ssh-add -c </dev/null &
-		dropbox start &
 	)
 	;;
 
 pjm0616-laptop3)
 	# Don't turn off the monitor.
-	xset 0 0 0
+	#xset 0 0 0
 
 	# MacBook Air 2012 touchpad
 	xinput set-prop 'bcm5974' 'Synaptics Two-Finger Scrolling' 1 1
 
-	# For some reason ibus doesn't work without this.
-	(sleep 3; killall ibus-daemon; ibus-daemon &) &
+	# ibus doesn't seem to be autostarted after upgrading to focal.
+	ibus-daemon -r -d &
 
 	$firstrun && (
 		SSH_ASKPASS=/usr/bin/ssh-askpass ssh-add -c </dev/null &
-		dropbox start &
 	)
 	;;
 
