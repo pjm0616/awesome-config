@@ -49,7 +49,7 @@ bionic)
 	)
 	;;
 
-focal)
+focal|jammy)
 	$firstrun && (
 		unity-settings-daemon &
 		nm-applet &
