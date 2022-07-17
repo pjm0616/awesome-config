@@ -51,7 +51,8 @@ bionic)
 
 focal|jammy)
 	$firstrun && (
-		unity-settings-daemon &
+		#unity-settings-daemon &
+		/usr/libexec/gsd-xsettings &
 		nm-applet &
 		gnome-screensaver &
 		pasystray &
