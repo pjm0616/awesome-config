@@ -31,30 +31,15 @@ wmname Sawfish
 
 # Start gnome services.
 case "$(lsb_release -s -c)" in
-xenial)
+jammy|noble)
 	$firstrun && (
-		unity-settings-daemon &
-		nm-applet --sm-disable &
-		#bluetooth-applet &
-		#blueman-applet &
-		#gnome-sound-applet &
-		system-config-printer-applet &
-	)
-	;;
-
-bionic)
-	$firstrun && (
-		unity-settings-daemon &
-		nm-applet &
-	)
-	;;
-
-focal|jammy)
-	$firstrun && (
-		#unity-settings-daemon &
 		/usr/libexec/gsd-xsettings &
-		nm-applet &
-		gnome-screensaver &
+		# In Ubuntu jammy, gnome-screensaver emits the following log every 1 second:
+		# (gnome-screensaver:2242676): GLib-GObject-WARNING **: 03:28:49.000: invalid unclassed pointer in cast to 'GtkLabel'
+		# (gnome-screensaver:2242676): Gtk-CRITICAL **: 03:28:49.000: gtk_label_set_markup: assertion 'GTK_IS_LABEL (label)' failed
+		# and that log fills up the log files and somehow hangs the system,
+		# so we redirect stderr to /dev/null as a temporary workaround.
+		gnome-screensaver 2>/dev/null &
 		pasystray &
 	)
 	;;
@@ -67,11 +52,11 @@ esac
 case "$(hostname)" in
 pjm0616-laptop)
 	# DP is primary.
-	xrandr --output DP-1 --primary
+	xrandr --output DisplayPort-0 --primary
 	# HDMI is secondary. Mirror display so that we can dynamically change the role of two monitors.
-	xrandr --output HDMI-1 --same-as DP-1
+	xrandr --output HDMI-A-0 --same-as DisplayPort-0
 	# ...or uncomment to use HDMI as separate display.
-	#xrandr --output HDMI-1 --right-of DP-1
+	#xrandr --output HDMI-A-0 --right-of DisplayPort-0
 
 	# Switch the monitor to standby mode after 10 minutes.
 	xset +dpms
