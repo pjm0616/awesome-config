@@ -51,12 +51,16 @@ esac
 
 case "$(hostname)" in
 pjm0616-laptop)
+	# Since this is a 4K monitor, use 2x scaling(xrandr --scale 0.5)
+	#xrandr --output HDMI-A-0 --scale 0.5 --filter nearest
+	#xrandr --output HDMI-A-0 --scale 1.0 --mode nearest --mode 1920x1080
+
 	# DP is primary.
-	xrandr --output DisplayPort-0 --primary
+	xrandr --output DisplayPort-0 --mode 1920x1080 --rate 60 --primary
 	# HDMI is secondary. Mirror display so that we can dynamically change the role of two monitors.
-	xrandr --output HDMI-A-0 --same-as DisplayPort-0
+	xrandr --output HDMI-A-0 --mode 1920x1080 --rate 60 --same-as DisplayPort-0
 	# ...or uncomment to use HDMI as separate display.
-	#xrandr --output HDMI-A-0 --right-of DisplayPort-0
+	#xrandr --output HDMI-A-0 --mode 1920x1080 --rate 60 --right-of DisplayPort-0
 
 	# Switch the monitor to standby mode after 10 minutes.
 	xset +dpms
@@ -69,6 +73,8 @@ pjm0616-laptop)
 
 	# IRCCloud persist daemon
 	#(cd /home/pjm0616/bin && tmux new -d -s irccloud && tmux send-keys -t irccloud './irccloud-persist.py' 'C-m')
+
+	/home/pjm0616/bin/easyeffects &
 
 	$firstrun && (
 		SSH_ASKPASS=/usr/bin/ssh-askpass ssh-add -c </dev/null &
