@@ -31,7 +31,7 @@ wmname Sawfish
 
 # Start gnome services.
 case "$(lsb_release -s -c)" in
-jammy|noble)
+jammy|noble|resolute)
 	$firstrun && (
 		/usr/libexec/gsd-xsettings &
 		# In Ubuntu jammy, gnome-screensaver emits the following log every 1 second:
